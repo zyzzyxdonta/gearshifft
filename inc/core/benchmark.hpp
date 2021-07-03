@@ -50,7 +50,8 @@ namespace gearshifft {
     int run() {
       if (parsing_failed_) {
         return 1;
-      } else if (info_only_) {
+      }
+      if (info_only_) {
         if(Context::options().getListDevices()) {
           std::cout << Context::get_device_list();
         } else if (Context::options().getVersion()) {

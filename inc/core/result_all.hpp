@@ -53,15 +53,12 @@ namespace gearshifft {
                                           (lhs.getDim()==rhs.getDim() &&
                                            lhs.getExtentsTotal()<rhs.getExtentsTotal())
                                          ));
-              } else {
-                return lhs.isComplex();
               }
-            } else {
-              return lhs.isInplace();
+              return lhs.isComplex();
             }
-          } else {
-            return false;
+            return lhs.isInplace();
           }
+          return false;
         });
     }
 

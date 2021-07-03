@@ -185,8 +185,7 @@ namespace fftw {
 
       static int init_threads() {
 #ifndef USE_ESSL
-        int res = fftw_init_threads();
-        return res;
+        return fftw_init_threads();
 #else
         return 1;
 #endif
@@ -219,8 +218,7 @@ namespace fftw {
 
       static int init_threads() {
 #ifndef USE_ESSL
-        int res = fftwf_init_threads();
-        return res;
+        return fftwf_init_threads();
 #else
         return 1;
 #endif
@@ -438,18 +436,17 @@ namespace fftw {
 
     static const std::string title() {
       if(native_fftw()){
-        return "Fftw";}
-      else{
-#if defined (USE_ESSL)
-        return "Fftw_ESSL";
-#elif defined (USE_ARMPL)
-        return "Fftw_ARMPL";
-#elif defined (__INTEL_COMPILER)
-        return "Fftw_mkl_intelwrapper";
-#else
-        return "Fftw_mkl_gnuwrapper";
-#endif
+        return "Fftw";
       }
+#if defined (USE_ESSL)
+      return "Fftw_ESSL";
+#elif defined (USE_ARMPL)
+      return "Fftw_ARMPL";
+#elif defined (__INTEL_COMPILER)
+      return "Fftw_mkl_intelwrapper";
+#else
+      return "Fftw_mkl_gnuwrapper";
+#endif
     }
 
     static std::string get_device_list() {
@@ -674,11 +671,9 @@ namespace fftw {
 #ifndef USE_ESSL
         if(plan_rigor_ == FFTW_WISDOM_ONLY) {
           throw std::runtime_error("fftw forward plan could not be created as wisdom is not available for this problem.");
-        } else
-#endif
-        {
-          throw std::runtime_error("fftw forward plan could not be created.");
         }
+#endif
+        throw std::runtime_error("fftw forward plan could not be created.");
       }
     }
 
@@ -693,11 +688,9 @@ namespace fftw {
 #ifndef USE_ESSL
         if(plan_rigor_ == FFTW_WISDOM_ONLY) {
           throw std::runtime_error("fftw inverse plan could not be created as wisdom is not available for this problem.");
-        } else
-#endif
-        {
-          throw std::runtime_error("fftw inverse plan could not be created.");
         }
+#endif
+        throw std::runtime_error("fftw inverse plan could not be created.");
       }
     }
 
