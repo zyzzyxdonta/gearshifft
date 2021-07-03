@@ -93,7 +93,7 @@ namespace gearshifft
 
       void create() {
         cl_context_properties props[3] = { CL_CONTEXT_PLATFORM, 0, 0 };
-        cl_int err = CL_SUCCESS;
+        cl_int err{};
         cl_device_type devtype = CL_DEVICE_TYPE_GPU;
 
         const std::string options_devtype = options().getDevice();
@@ -225,7 +225,7 @@ namespace gearshifft
 
 
       ClFFTImpl(const Extent& cextents) {
-        cl_int err;
+        cl_int err{};
         context_ = ClFFTContext::context();
         if(context_.ctx==0) {
           throw std::runtime_error("Context has not been created.");
@@ -354,7 +354,7 @@ namespace gearshifft
        * Allocate buffers on OpenCL device
        */
       void allocate() {
-        cl_int err;
+        cl_int err{};
         data_ = clCreateBuffer( context_.ctx,
                                 CL_MEM_READ_WRITE,
                                 data_size_,

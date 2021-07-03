@@ -127,7 +127,7 @@ namespace gearshifft {
     }
 
     inline cl_device_type getDeviceType(cl_device_id dev_id) {
-      cl_device_type dev_type;
+      cl_device_type dev_type{};
       CHECK_CL( clGetDeviceInfo(dev_id, CL_DEVICE_TYPE, sizeof(cl_device_type), &dev_type, NULL) );
       return dev_type;
     }
@@ -137,7 +137,7 @@ namespace gearshifft {
       std::vector<std::pair<std::string,std::string> > values;
       char* value = nullptr;
       size_t valueSize = 0;
-      cl_uint maxComputeUnits;
+      cl_uint maxComputeUnits{};
       // print device name
       clGetDeviceInfo(dev_id, CL_DEVICE_NAME, 0, NULL, &valueSize);
       value = new char[valueSize];
@@ -179,7 +179,7 @@ namespace gearshifft {
       }
 
       // clFFT version
-      cl_uint  major, minor, patch;
+      cl_uint major{}, minor{}, patch{};
       clfftGetVersion(&major, &minor, &patch);
       info << R"(,"clFFT",")" << major << "." << minor << "." << patch <<"\"";
       return info;

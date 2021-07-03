@@ -54,7 +54,7 @@ namespace gearshifft {
                            T_Precision >
                        (extents);
 
-      int r;
+      int r{};
       try {
         const double error_bound = ERROR_BOUND<0.0 ? ErrorBound<T_Precision>()() : ERROR_BOUND;
         for(r = 0; r < NR_RUNS; ++r)

@@ -71,9 +71,8 @@ namespace gearshifft {
                          const TVector& data,
                          double error_bound) const {
       double diff_sum = 0;
-      double diff;
       for( size_t i=0; i<size_; ++i ){
-        diff = sub<Normalize>(data, i);
+        double diff = sub<Normalize>(data, i);
         if(std::isnan(diff) || diff > error_bound) {
           ++mismatches;
         }

@@ -194,9 +194,8 @@ namespace gearshifft {
       }
       stream << std::setfill('-') << std::setw(70) <<"-"<< "\n"
              << std::setfill(' ');
-      double sum;
       for(int ival=0; ival<T_NumberValues; ++ival) {
-        sum = 0.0;
+        double sum = 0.0;
         for(int run=T_NumberWarmups; run<nruns; ++run) {
           result.setRun(run);
           sum += result.getValue(ival);
