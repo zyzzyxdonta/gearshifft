@@ -114,7 +114,7 @@ namespace gearshifft
     size_t getExtentsTotal() const { return total_; }
     bool isInplace() const { return isInplace_; }
     bool isComplex() const { return isComplex_; }
-    bool hasError() const { return error_.empty()==false; }
+    bool hasError() const { return !error_.empty(); }
     const std::string& getError() const { return error_; }
     int getErrorRun() const { return errorRun_; }
 

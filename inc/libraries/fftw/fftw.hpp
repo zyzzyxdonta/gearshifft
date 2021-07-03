@@ -511,7 +511,7 @@ namespace fftw {
       std::stringstream ss;
       std::string line;
       ifs.open(filename.c_str(), std::ifstream::in);
-      if(!ifs.good())
+      if(!ifs.good()) {
         throw std::runtime_error("Wisdom file not accessable.");
       }
 
@@ -614,7 +614,7 @@ namespace fftw {
                                      std::multiplies<size_t>());
 
         data_size_ = (IsInplaceReal ? 2*n_complex_ : n_) * sizeof(value_type);
-        if(!IsInplace)
+        if(!IsInplace) {
           data_complex_size_ = n_complex_ * sizeof(ComplexType);
         }
 

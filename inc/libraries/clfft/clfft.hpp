@@ -179,9 +179,9 @@ namespace gearshifft
       using ComplexType = typename traits::Types<TPrecision>::ComplexType;
       using RealType = typename traits::Types<TPrecision>::RealType;
       using Extent = std::array<size_t,NDim>;
-      static constexpr auto IsInplace = TFFT::IsInplace;
-      static constexpr auto IsComplex = TFFT::IsComplex;
-      static constexpr auto IsInplaceReal = IsInplace && IsComplex==false;
+      static constexpr bool IsInplace = TFFT::IsInplace;
+      static constexpr bool IsComplex = TFFT::IsComplex;
+      static constexpr bool IsInplaceReal = IsInplace && !IsComplex;
       static constexpr clfftDim FFTDim = NDim==1 ? CLFFT_1D : NDim==2 ? CLFFT_2D : CLFFT_3D;
       using value_type = typename std::conditional<IsComplex,ComplexType,RealType>::type;
 
@@ -239,7 +239,7 @@ namespace gearshifft
         std::copy(extents_.begin(), extents_.end(), extents_cl_.begin());
 
         extents_complex_ = extents_;
-        if(IsComplex==false){
+        if(!IsComplex){
           extents_complex_.front() = (extents_.front()/2 + 1);
         }
 
@@ -249,19 +249,19 @@ namespace gearshifft
                                      std::multiplies<size_t>());
 
         data_size_ = (IsInplaceReal ? 2*n_complex_ : n_) * sizeof(value_type);
-        if(IsInplace==false) {
+        if(!IsInplace) {
           data_complex_size_ = n_complex_ * sizeof(ComplexType);
         }
 
 
         // check supported sizes : http://clmathlibraries.github.io/clFFT/
-        if((std::is_same<TPrecision,float>::value && n_>(1<<24) && IsComplex==false)
+        if((std::is_same<TPrecision,float>::value && n_>(1<<24) && !IsComplex)
            ||
-           (std::is_same<TPrecision,double>::value && n_>(1<<22) && IsComplex==false)
+           (std::is_same<TPrecision,double>::value && n_>(1<<22) && !IsComplex)
            ||
-           (std::is_same<TPrecision,float>::value && n_>(1<<27) && IsComplex==true)
+           (std::is_same<TPrecision,float>::value && n_>(1<<27) && IsComplex)
            ||
-           (std::is_same<TPrecision,double>::value && n_>(1<<26) && IsComplex==true)) {
+           (std::is_same<TPrecision,double>::value && n_>(1<<26) && IsComplex)) {
           throw std::runtime_error("Unsupported lengths.");
         }
 
@@ -360,7 +360,7 @@ namespace gearshifft
                                 data_size_,
                                 nullptr, // host pointer @todo
                                 &err );
-        if(IsInplace==false){
+        if(!IsInplace){
           data_complex_ = clCreateBuffer( context_.ctx,
                                           CL_MEM_READ_WRITE,
                                           data_complex_size_,
@@ -395,7 +395,7 @@ namespace gearshifft
        * If real-transform: create clfft backward plan with layout, precision, strides and distances
        */
       void init_inverse() {
-        if(IsComplex==false){
+        if(!IsComplex){
           CHECK_CL(clfftDestroyPlan( &plan_ ));
           CHECK_CL(clfftCreateDefaultPlan(&plan_, context_.ctx, FFTDim, extents_cl_.data()));
           CHECK_CL(clfftSetPlanPrecision(plan_, traits::FFTPrecision<TPrecision>::value));
@@ -510,7 +510,7 @@ namespace gearshifft
           if( data_ ) {
             CHECK_CL( clReleaseMemObject( data_ ) );
             data_ = 0;
-            if(IsInplace==false && data_complex_){
+            if(!IsInplace && data_complex_){
               CHECK_CL( clReleaseMemObject( data_complex_ ) );
               data_complex_ = 0;
             }
