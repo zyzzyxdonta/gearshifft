@@ -114,16 +114,18 @@ namespace gearshifft
             devtype = CL_DEVICE_TYPE_ACCELERATOR;
           } else if(boost::iequals(options_devtype, "gpu")) {
             devtype = CL_DEVICE_TYPE_GPU;
-          } else
+          } else {
             throw std::runtime_error("Unsupported device type");
+          }
           findClDevice(devtype,
                        &context().platform,
                        &context().device);
         }
 
         devtype = getDeviceType(context().device);
-        if(devtype!=CL_DEVICE_TYPE_GPU && devtype!=CL_DEVICE_TYPE_ACCELERATOR)
+        if(devtype!=CL_DEVICE_TYPE_GPU && devtype!=CL_DEVICE_TYPE_ACCELERATOR) {
           context().use_host_memory=true;
+        }
 
         context().device_used = context().device;
         props[1] = reinterpret_cast<cl_context_properties>(context().platform);
@@ -225,8 +227,9 @@ namespace gearshifft
       ClFFTImpl(const Extent& cextents) {
         cl_int err;
         context_ = ClFFTContext::context();
-        if(context_.ctx==0)
+        if(context_.ctx==0) {
           throw std::runtime_error("Context has not been created.");
+        }
 
         extents_ = interpret_as::row_major(cextents);
         n_ = std::accumulate(extents_.begin(),
@@ -246,8 +249,9 @@ namespace gearshifft
                                      std::multiplies<size_t>());
 
         data_size_ = (IsInplaceReal ? 2*n_complex_ : n_) * sizeof(value_type);
-        if(IsInplace==false)
+        if(IsInplace==false) {
           data_complex_size_ = n_complex_ * sizeof(ComplexType);
+        }
 
 
         // check supported sizes : http://clmathlibraries.github.io/clFFT/
@@ -257,8 +261,9 @@ namespace gearshifft
            ||
            (std::is_same<TPrecision,float>::value && n_>(1<<27) && IsComplex==true)
            ||
-           (std::is_same<TPrecision,double>::value && n_>(1<<26) && IsComplex==true))
+           (std::is_same<TPrecision,double>::value && n_>(1<<26) && IsComplex==true)) {
           throw std::runtime_error("Unsupported lengths.");
+        }
 
         queue_ = clCreateCommandQueue( context_.ctx, context_.device_used, 0, &err );
 //        queue_ = clCreateCommandQueue( context_.ctx, context_.device_used, CL_QUEUE_PROFILING_ENABLE, &err );

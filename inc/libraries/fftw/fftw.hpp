@@ -59,12 +59,15 @@ namespace fftw {
     }
 
     unsigned plan_rigor() const {
-      if(rigor_ == "measure")
+      if(rigor_ == "measure") {
         return FFTW_MEASURE;
-      if(rigor_ == "estimate")
+      }
+      if(rigor_ == "estimate") {
         return FFTW_ESTIMATE;
-      if(rigor_ == "patient")
+      }
+      if(rigor_ == "patient") {
         return FFTW_PATIENT;
+      }
       if(rigor_ == "wisdom"){
         if(!native_fftw()) {
 #if defined (USE_ESSL)
@@ -81,8 +84,9 @@ namespace fftw {
         return 0;   // FFTW_WISDOM_ONLY is not defined for ESSL -- but this line won't be reached.
 #endif
       }
-      if(rigor_ == "exhaustive")
+      if(rigor_ == "exhaustive") {
         return FFTW_EXHAUSTIVE;
+      }
       throw std::runtime_error("Invalid FFTW rigor.");
     }
 
@@ -92,10 +96,12 @@ namespace fftw {
 
     template<typename T_Precision>
     std::string wisdom_file() {
-      if(std::is_same<T_Precision, float>::value)
+      if(std::is_same<T_Precision, float>::value) {
         return wisdom_sp_;
-      if(std::is_same<T_Precision, double>::value)
+      }
+      if(std::is_same<T_Precision, double>::value) {
         return wisdom_dp_;
+      }
       throw std::runtime_error("Precision type not supported by FFTW.");
     }
 
@@ -191,8 +197,9 @@ namespace fftw {
 #ifndef USE_ESSL
         int av_procs = std::thread::hardware_concurrency();
 
-        if(nthreads<1 || nthreads>av_procs)
+        if(nthreads<1 || nthreads>av_procs) {
           nthreads = av_procs;
+        }
 
         fftw_plan_with_nthreads(nthreads);
         fftw_set_timelimit(timelimit);
@@ -224,8 +231,9 @@ namespace fftw {
 #ifndef USE_ESSL
         int av_procs = std::thread::hardware_concurrency();
 
-        if(nthreads<1 || nthreads>av_procs)
+        if(nthreads<1 || nthreads>av_procs) {
           nthreads = av_procs;
+        }
 
         fftwf_plan_with_nthreads(nthreads);
         fftwf_set_timelimit(timelimit);
@@ -259,8 +267,9 @@ namespace fftw {
 
       static void destroy(PlanType _plan){
 
-        if(_plan)
+        if(_plan) {
           fftwf_destroy_plan(_plan);
+        }
         _plan = nullptr;
 
       }
@@ -274,8 +283,9 @@ namespace fftw {
 
         gearshifft::ignore_unused(_dir);
         std::array<int,NDims> converted;
-        for(size_t i = 0;i < NDims;++i)
+        for(size_t i = 0;i < NDims;++i) {
           converted[i] = _shape[i];
+        }
 
         PlanType value = fftwf_plan_dft_r2c(NDims,
                                             converted.data(),
@@ -294,8 +304,9 @@ namespace fftw {
 
         gearshifft::ignore_unused(_dir);
         std::array<int,NDims> converted;
-        for(size_t i = 0;i < NDims;++i)
+        for(size_t i = 0;i < NDims;++i) {
           converted[i] = _shape[i];
+        }
 
         PlanType value = fftwf_plan_dft_c2r(NDims,
                                             converted.data(),
@@ -313,8 +324,9 @@ namespace fftw {
                              unsigned plan_flags = FFTW_MEASURE){
 
         std::array<int,NDims> converted;
-        for(size_t i = 0;i < NDims;++i)
+        for(size_t i = 0;i < NDims;++i) {
           converted[i] = _shape[i];
+        }
 
 
         PlanType value = fftwf_plan_dft(NDims,
@@ -341,8 +353,9 @@ namespace fftw {
 
       static void destroy(PlanType _plan){
 
-        if(_plan)
+        if(_plan) {
           fftw_destroy_plan(_plan);
+        }
         _plan = nullptr;
 
       }
@@ -357,8 +370,9 @@ namespace fftw {
 
         gearshifft::ignore_unused(_dir);
         std::array<int,NDims> converted;
-        for(size_t i = 0;i < NDims;++i)
+        for(size_t i = 0;i < NDims;++i) {
           converted[i] = _shape[i];
+        }
 
 
         PlanType value = fftw_plan_dft_r2c(NDims,
@@ -378,8 +392,9 @@ namespace fftw {
 
         gearshifft::ignore_unused(_dir);
         std::array<int,NDims> converted;
-        for(size_t i = 0;i < NDims;++i)
+        for(size_t i = 0;i < NDims;++i) {
           converted[i] = _shape[i];
+        }
 
 
         PlanType value = fftw_plan_dft_c2r(NDims,
@@ -398,8 +413,9 @@ namespace fftw {
                              unsigned plan_flags = FFTW_MEASURE){
 
         std::array<int,NDims> converted;
-        for(size_t i = 0;i < NDims;++i)
+        for(size_t i = 0;i < NDims;++i) {
           converted[i] = _shape[i];
+        }
 
 
         PlanType value = fftw_plan_dft(NDims,
@@ -455,10 +471,12 @@ namespace fftw {
       // Returns the number of supported concurrent threads of implementation
       size_t maxndevs = std::thread::hardware_concurrency();
       size_t ndevs = options().getNumberDevices();
-      if(maxndevs==0)
+      if(maxndevs==0) {
         maxndevs = 1;
-      if( ndevs==0 || ndevs>maxndevs )
+      }
+      if( ndevs==0 || ndevs>maxndevs ) {
         ndevs = maxndevs;
+      }
 #else
       size_t maxndevs = 0;
       size_t ndevs = 0;
@@ -470,10 +488,11 @@ namespace fftw {
           << ",\"TotalMemory\"," << getMemorySize()
           << ",\"PlanRigor\",\"" << options().plan_rigor_str();
       double plan_timelimit = options().plan_timelimit();
-      if(plan_timelimit > 0.0)
+      if(plan_timelimit > 0.0) {
         msg << "\",\"PlanTimeLimit [s]\"," << plan_timelimit;
-      else
+      } else {
         msg << "\",\"PlanTimeLimit [s]\"," << "\"None\"";
+      }
       return msg.str();
     }
 
@@ -484,8 +503,9 @@ namespace fftw {
 
     void operator()() {
 
-      if(!native_fftw())
+      if(!native_fftw()) {
         throw std::runtime_error("Wisdom files are only supported by native fftw, unable to proceed");
+      }
 
 #ifndef USE_ESSL
       std::string filename = FftwContext::options().wisdom_file<T_Precision>();
@@ -496,6 +516,7 @@ namespace fftw {
       ifs.open(filename.c_str(), std::ifstream::in);
       if(!ifs.good())
         throw std::runtime_error("Wisdom file not accessable.");
+      }
 
       if(ifs.is_open()) {
         while ( getline (ifs,line) )
@@ -507,12 +528,15 @@ namespace fftw {
       }
 
       int imported = 0;
-      if(std::is_same<T_Precision,float>::value)
+      if(std::is_same<T_Precision,float>::value) {
         imported = fftwf_import_wisdom_from_string(source.c_str());
-      if(std::is_same<T_Precision,double>::value)
+      }
+      if(std::is_same<T_Precision,double>::value) {
         imported = fftw_import_wisdom_from_string(source.c_str());
-      if(!imported)
+      }
+      if(!imported) {
         throw std::runtime_error("Wisdom file could not be loaded.");
+      }
 #endif
     }
 
@@ -595,6 +619,7 @@ namespace fftw {
         data_size_ = (IsInplaceReal ? 2*n_complex_ : n_) * sizeof(value_type);
         if(!IsInplace)
           data_complex_size_ = n_complex_ * sizeof(ComplexType);
+        }
 
         //size_t total_mem = getMemorySize();
         size_t total_mem = 95*getMemorySize()/100; // keep some memory available, otherwise an out-of-memory killer becomes more likely
@@ -605,8 +630,9 @@ namespace fftw {
         }
 
 #if defined(GEARSHIFFT_BACKEND_FFTW_THREADS) && GEARSHIFFT_BACKEND_FFTW_THREADS==1
-        if( traits::thread_api<TPrecision>::init_threads()==0 )
+        if( traits::thread_api<TPrecision>::init_threads()==0 ) {
           throw std::runtime_error("fftw thread initialization failed.");
+        }
 
         traits::thread_api<TPrecision>::plan_with_threads(FftwContext::options().getNumberDevices());
 #endif
@@ -773,20 +799,24 @@ namespace fftw {
 
     void destroy() {
 
-      if(data_)
+      if(data_) {
         MemoryAPI::free(data_);
+      }
       data_ = nullptr;
 
-      if(data_complex_ && !IsInplace)
+      if(data_complex_ && !IsInplace) {
         MemoryAPI::free(data_complex_);
+      }
       data_complex_ = nullptr;
 
-      if(fwd_plan_)
+      if(fwd_plan_) {
         PlanAPI::destroy(fwd_plan_);
+      }
       fwd_plan_ = nullptr;
 
-      if(bwd_plan_)
+      if(bwd_plan_) {
         PlanAPI::destroy(bwd_plan_);
+      }
       bwd_plan_ = nullptr;
 
     }

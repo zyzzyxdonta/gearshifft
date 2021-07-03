@@ -52,8 +52,9 @@ namespace gearshifft
       for( size_t k=0; k<dim_; ++k ) {
         p2 &= powerOf(extents_[k], 2.0);
       }
-      if(p2)
+      if(p2) {
         return 2;
+      }
       for( size_t k=0; k<dim_; ++k ) {
         if( isNotOnlyDivBy_2_3_5_7(extents_[k]) ){
           return 1;
@@ -144,22 +145,25 @@ namespace gearshifft
 
   private:
     bool powerOf(size_t e, double b) {
-      if(e==0)
+      if(e==0) {
         return false;
+      }
       double a = static_cast<double>(e);
       double p = floor(log(a)/log(b)+0.5);
       return fabs(pow(b,p)-a)<0.0001;
     }
 
     bool isNotOnlyDivBy_2_3_5_7(size_t e) {
-      if(e==2 || e==3 || e==5 || e==7)
+      if(e==2 || e==3 || e==5 || e==7) {
         return false;
+      }
       size_t t = e;
       size_t sqr = static_cast<size_t>(sqrt(e));
       for( size_t d=2; d<=sqr; ++d ) {
         // if e contains divisors > 7
-        if( e%d == 0 && d>7 )
+        if( e%d == 0 && d>7 ) {
           return true;
+        }
         // e = e / d^q
         while( e%d == 0 ) {
           e /= d;

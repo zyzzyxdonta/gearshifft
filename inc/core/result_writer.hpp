@@ -254,15 +254,17 @@ namespace gearshifft {
                << result.getID();
         // was run successfull?
         if(result.hasError() && result.getErrorRun()<=run) {
-          if(result.getErrorRun()==run)
+          if(result.getErrorRun()==run) {
             stream << SEP << "\"" <<result.getError() << "\"";
-          else
+          } else {
             stream << SEP << "\"Skipped\""; // subsequent runs did not run
+          }
         } else {
-          if(run<T_NumberWarmups)
+          if(run<T_NumberWarmups) {
             stream << SEP << "\"" << "Warmup" << "\"";
-          else
+          } else {
             stream << SEP << "\"" << "Success" << "\"";
+          }
         }
 
         // measured time and size values

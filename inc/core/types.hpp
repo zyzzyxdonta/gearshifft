@@ -59,8 +59,9 @@ namespace gearshifft {
   std::ostream& operator<<(std::ostream& os, const std::array<size_t,NDim>& e) {
     os << e[0];
     for(size_t k=1; k<NDim; ++k) {
-      if(e[k]==0)
+      if(e[k]==0) {
         break;
+      }
       os << "x" << e[k];
     }
     return os;

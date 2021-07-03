@@ -43,9 +43,9 @@ namespace gearshifft {
         results_.begin( ), results_.end( ),
         [ ]( const ResultBenchmarkT& lhs, const ResultBenchmarkT& rhs )
         {
-          if(lhs.getPrecision()==rhs.getPrecision())
-            if(lhs.isInplace()==rhs.isInplace())
-              if(lhs.isComplex()==rhs.isComplex())
+          if(lhs.getPrecision()==rhs.getPrecision()) {
+            if(lhs.isInplace()==rhs.isInplace()) {
+              if(lhs.isComplex()==rhs.isComplex()) {
                 return lhs.getDimKind()<rhs.getDimKind() ||
                                         (lhs.getDimKind()==rhs.getDimKind() &&
                                          (
@@ -53,12 +53,15 @@ namespace gearshifft {
                                           (lhs.getDim()==rhs.getDim() &&
                                            lhs.getExtentsTotal()<rhs.getExtentsTotal())
                                          ));
-              else
+              } else {
                 return lhs.isComplex();
-            else
+              }
+            } else {
               return lhs.isInplace();
-          else
+            }
+          } else {
             return false;
+          }
         });
     }
 

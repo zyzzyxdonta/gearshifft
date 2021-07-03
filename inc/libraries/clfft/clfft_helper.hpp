@@ -190,8 +190,9 @@ namespace gearshifft {
                              cl_device_id* device) {
       cl_uint num_of_platforms = 0, num_of_devices = 0;
       cl_device_id device_id = 0;
-      if (clGetPlatformIDs(0, NULL, &num_of_platforms) != CL_SUCCESS)
+      if (clGetPlatformIDs(0, NULL, &num_of_platforms) != CL_SUCCESS) {
         throw std::runtime_error("Unable to get platform_id");
+      }
 
       cl_platform_id *platform_ids = new cl_platform_id[num_of_platforms];
       if (clGetPlatformIDs(num_of_platforms, platform_ids, NULL) != CL_SUCCESS) {
@@ -220,8 +221,9 @@ namespace gearshifft {
 
     inline std::stringstream listClDevices() {
       cl_uint num_of_platforms = 0;
-      if (clGetPlatformIDs(0, NULL, &num_of_platforms) != CL_SUCCESS)
+      if (clGetPlatformIDs(0, NULL, &num_of_platforms) != CL_SUCCESS) {
         throw std::runtime_error("Unable to get platform_id");
+      }
 
       cl_platform_id *platform_ids = new cl_platform_id[num_of_platforms];
       if (clGetPlatformIDs(num_of_platforms, platform_ids, NULL) != CL_SUCCESS) {
@@ -258,18 +260,21 @@ namespace gearshifft {
                                   cl_uint id_device) {
 
       cl_uint num_of_platforms = 0;
-      if(clGetPlatformIDs(0, NULL, &num_of_platforms) != CL_SUCCESS)
+      if(clGetPlatformIDs(0, NULL, &num_of_platforms) != CL_SUCCESS) {
         throw std::runtime_error("Unable to get platform_id");
-      if(num_of_platforms <= id_platform)
+      }
+      if(num_of_platforms <= id_platform) {
         throw std::runtime_error("Unable to get platform_id");
+      }
 
       cl_platform_id *platform_ids = new cl_platform_id[id_platform+1];
       CHECK_CL( clGetPlatformIDs(id_platform+1, platform_ids, NULL) );
 
       cl_uint num_of_devices = 0;
       CHECK_CL( clGetDeviceIDs(platform_ids[id_platform], CL_DEVICE_TYPE_ALL, 0, NULL, &num_of_devices) );
-      if(num_of_devices <= id_device)
+      if(num_of_devices <= id_device) {
         throw std::runtime_error("Unable to get device_id");
+      }
 
       cl_device_id* devices = new cl_device_id[id_device+1];
       CHECK_CL( clGetDeviceIDs(platform_ids[id_platform], CL_DEVICE_TYPE_ALL, id_device+1, devices, NULL) );

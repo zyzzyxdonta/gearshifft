@@ -74,8 +74,9 @@ namespace gearshifft {
       double diff;
       for( size_t i=0; i<size_; ++i ){
         diff = sub<Normalize>(data, i);
-        if(std::isnan(diff) || diff > error_bound)
+        if(std::isnan(diff) || diff > error_bound) {
           ++mismatches;
+        }
         diff_sum += diff*diff;
       }
       deviation = sqrt(diff_sum/(size_-1.0));
@@ -94,8 +95,9 @@ namespace gearshifft {
     }
 
     void init_if_dim_changed(const Extent& extents) {
-      if(extents_ == extents) // nothing changed
+      if(extents_ == extents) { // nothing changed
         return;
+      }
       extents_ = extents;
       size_ = std::accumulate(extents_.begin(), extents_.end(), 1, std::multiplies<size_t>());
 
@@ -110,10 +112,11 @@ namespace gearshifft {
         // This method still leads to nan's when size_ >= (1<<20)
         for( size_t i=0; i<size_; ++i )
         {
-          if( i%(size_/limit16)==0 )
+          if( i%(size_/limit16)==0 ) {
             data_linear_[i] = 0.1;
-          else
+          } else {
             data_linear_[i] = 0.0;
+          }
         }
       } else {
         for( size_t i=0; i<size_; ++i )

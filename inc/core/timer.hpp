@@ -18,8 +18,9 @@ namespace gearshifft {
       started = true;
     }
     double stopTimer() {
-      if(started==false)
+      if(started==false) {
         throw std::runtime_error("Timer must be started before.");
+      }
       started = false;
       return TimerImpl::stopTimer();
     }
