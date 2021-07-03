@@ -486,12 +486,12 @@ namespace fftw {
       msg << "\"SupportedThreads\"," << maxndevs
           << ",\"UsedThreads\"," << ndevs
           << ",\"TotalMemory\"," << getMemorySize()
-          << ",\"PlanRigor\",\"" << options().plan_rigor_str();
+          << R"(,"PlanRigor",")" << options().plan_rigor_str();
       double plan_timelimit = options().plan_timelimit();
       if(plan_timelimit > 0.0) {
-        msg << "\",\"PlanTimeLimit [s]\"," << plan_timelimit;
+        msg << R"(","PlanTimeLimit [s]",)" << plan_timelimit;
       } else {
-        msg << "\",\"PlanTimeLimit [s]\"," << "\"None\"";
+        msg << R"(","PlanTimeLimit [s]",)" << "\"None\"";
       }
       return msg.str();
     }

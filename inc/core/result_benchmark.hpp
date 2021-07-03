@@ -80,7 +80,7 @@ namespace gearshifft
       errorRun_ = run;
       error_ = what;
       // remove path informations of source file location
-      std::regex e ("([^ ]*/|[^ ]*\\\\)([^/\\\\]*)(hpp|cpp)");
+      std::regex e{R"(([^ ]*/|[^ ]*\\)([^/\\]*)(hpp|cpp))"};
       error_ = std::regex_replace(error_,e,"$2$3");
     }
 

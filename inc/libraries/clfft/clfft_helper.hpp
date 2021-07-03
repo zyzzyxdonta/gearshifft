@@ -181,7 +181,7 @@ namespace gearshifft {
       // clFFT version
       cl_uint  major, minor, patch;
       clfftGetVersion(&major, &minor, &patch);
-      info << ",\"clFFT\",\"" << major << "." << minor << "." << patch <<"\"";
+      info << R"(,"clFFT",")" << major << "." << minor << "." << patch <<"\"";
       return info;
     }
 

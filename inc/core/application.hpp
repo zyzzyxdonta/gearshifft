@@ -100,10 +100,10 @@ namespace gearshifft {
                        << ",\"NumberTotalRuns\"," << NR_RUNS
                        << ",\"ErrorBound\"," << ERROR_BOUND
                        << ",\"CurrentTime\"," << now
-                       << ",\"CurrentTimeLocal\",\"" << strtok(ctime(&now), "\n") << "\""
-                       << ",\"Hostname\",\"" << boost::asio::ip::host_name() << "\""
-                       << ",\"gearshifft\",\"" << gearshifft_version() << "\""
-                       << ",\"tag\",\"" << T_Context::options().getTag() << "\"";
+                       << R"(,"CurrentTimeLocal",")" << strtok(ctime(&now), "\n") << "\""
+                       << R"(,"Hostname",")" << boost::asio::ip::host_name() << "\""
+                       << R"(,"gearshifft",")" << gearshifft_version() << "\""
+                       << R"(,"tag",")" << T_Context::options().getTag() << "\"";
 
       resultWriter_.start(&resultAll_,
                           T_Context::options().getOutputFile(),

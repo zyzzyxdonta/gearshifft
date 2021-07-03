@@ -226,8 +226,8 @@ namespace gearshifft {
                << "; \"Time_ContextDestroy [ms]\", " << timeContextDestroy_  << "\n";
       }
       // header
-      stream << "\"library\",\"inplace\",\"complex\",\"precision\",\"dim\",\"kind\""
-             << ",\"nx\",\"ny\",\"nz\",\"run\",\"id\",\"success\"";
+      stream << R"("library","inplace","complex","precision","dim","kind")"
+             << R"(,"nx","ny","nz","run","id","success")";
       for(auto ival=0; ival<T_NumberValues; ++ival) {
         stream << SEP << '"' << static_cast<RecordType>(ival) << '"';
       }
