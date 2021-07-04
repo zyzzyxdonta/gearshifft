@@ -11,7 +11,7 @@ namespace gearshifft {
   /** CPU Wall timer
    */
   struct TimerCPU_ {
-    typedef std::chrono::high_resolution_clock clock;
+    using clock = std::chrono::high_resolution_clock;
 
     clock::time_point start;
     double time = 0.0;
@@ -26,6 +26,6 @@ namespace gearshifft {
     }
   };
 
-  typedef Timer<TimerCPU_> TimerCPU;
+  using TimerCPU = Timer<TimerCPU_>;
 }
 #endif /* TIMER_CPU_HPP_ */

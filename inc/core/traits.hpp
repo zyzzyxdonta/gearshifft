@@ -33,8 +33,8 @@ namespace gearshifft {
   template <typename T>
   class has_title
   {
-    typedef char one;
-    typedef long two;
+    using one = char;
+    using two = long;
     template <typename C> static one test( decltype(&C::Title) ) ;
     template <typename C> static two test(...);
   public:
