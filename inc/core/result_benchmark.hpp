@@ -3,11 +3,11 @@
 
 #include "traits.hpp"
 
-#include <math.h>
+#include <cmath>
 #include <iostream>
 #include <array>
 #include <vector>
-#include <assert.h>
+#include <cassert>
 #include <regex>
 
 namespace gearshifft

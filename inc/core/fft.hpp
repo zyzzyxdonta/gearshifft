@@ -6,7 +6,7 @@
 #include "types.hpp"
 
 #include <array>
-#include <assert.h>
+#include <cassert>
 #include <memory>
 #include <numeric>
 #include <ostream>
