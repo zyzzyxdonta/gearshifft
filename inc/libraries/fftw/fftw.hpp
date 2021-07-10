@@ -130,6 +130,7 @@ namespace fftw {
         // otherwise keep the original type.
         using R = std::conditional_t<std::is_array<S>::value, S, D>;
 
+        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
         return static_cast<D *>(std::memcpy(reinterpret_cast<R *>(destination), source, size));
       }
 
@@ -721,6 +722,7 @@ namespace fftw {
     void allocate() {
       data_ = static_cast<value_type*>(MemoryAPI::malloc(data_size_));
       if(IsInplace){
+        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
         data_complex_ = reinterpret_cast<ComplexType*>(data_);
       }
       else{
