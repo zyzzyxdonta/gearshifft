@@ -189,7 +189,7 @@ namespace gearshifft {
                              cl_platform_id* platform,
                              cl_device_id* device) {
       cl_uint num_of_platforms = 0, num_of_devices = 0;
-      cl_device_id device_id = 0;
+      cl_device_id device_id = nullptr;
       if (clGetPlatformIDs(0, NULL, &num_of_platforms) != CL_SUCCESS) {
         throw std::runtime_error("Unable to get platform_id");
       }

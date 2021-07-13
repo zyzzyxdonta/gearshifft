@@ -38,7 +38,7 @@ namespace gearshifft {
     template <typename C> static one test( decltype(&C::Title) ) ;
     template <typename C> static two test(...);
   public:
-    enum { value = sizeof(test<T>(0)) == sizeof(char) };
+    enum { value = sizeof(test<T>(nullptr)) == sizeof(char) };
   };
 /**
  * Trait to get precision type of Real or Complex data type.

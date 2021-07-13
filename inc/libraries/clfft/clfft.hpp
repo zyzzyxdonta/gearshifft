@@ -66,10 +66,10 @@ namespace gearshifft
 
 
     struct ClFFTContextAttributes {
-      cl_platform_id platform = 0;
-      cl_device_id device = 0;
-      cl_device_id device_used = 0;
-      cl_context ctx = 0;
+      cl_platform_id platform = nullptr;
+      cl_device_id device = nullptr;
+      cl_device_id device_used = nullptr;
+      cl_context ctx = nullptr;
       bool use_host_memory = false; // false, if an accelerator with own memory is used
 
     };
@@ -137,7 +137,7 @@ namespace gearshifft
               static_cast<cl_device_partition_property>(ndevs),
               CL_DEVICE_PARTITION_BY_COUNTS_LIST_END
             };
-            cl_device_id subdev_id = 0;
+            cl_device_id subdev_id = nullptr;
             CHECK_CL(clCreateSubDevices(context().device,
                                         properties, 1, &subdev_id, NULL));
             context().device_used = subdev_id;
@@ -158,8 +158,8 @@ namespace gearshifft
           CHECK_CL(clReleaseContext( context().ctx ));
           CHECK_CL(clReleaseDevice( context().device ));
           CHECK_CL( clfftTeardown( ) );
-          context().device = 0;
-          context().ctx = 0;
+          context().device = nullptr;
+          context().ctx = nullptr;
         }
       }
     };
@@ -227,7 +227,7 @@ namespace gearshifft
       explicit ClFFTImpl(const Extent& cextents) {
         cl_int err{};
         context_ = ClFFTContext::context();
-        if(context_.ctx==0) {
+        if(context_.ctx==nullptr) {
           throw std::runtime_error("Context has not been created.");
         }
 
@@ -408,8 +408,8 @@ namespace gearshifft
           CHECK_CL(clfftBakePlan(plan_,
                                  1, // number of queues
                                  &queue_,
-                                 0, // callback
-                                 0)); // user data
+                                 nullptr, // callback
+                                 nullptr)); // user data
         }
         CHECK_CL( clFinish(queue_) );
       }
@@ -420,11 +420,11 @@ namespace gearshifft
                                        1, // numQueuesAndEvents
                                        &queue_,
                                        0, // numWaitEvents
-                                       0, // waitEvents
+                                       nullptr, // waitEvents
                                        nullptr,//context_.event.get(), // outEvents
                                        &data_,  // input
                                        IsInplace ? &data_ : &data_complex_, // output
-                                       0)); // tmpBuffer
+                                       nullptr)); // tmpBuffer
         CHECK_CL( clFinish(queue_) );
       }
 
@@ -509,10 +509,10 @@ namespace gearshifft
           CHECK_CL( clFinish(queue_) );
           if( data_ ) {
             CHECK_CL( clReleaseMemObject( data_ ) );
-            data_ = 0;
+            data_ = nullptr;
             if(!IsInplace && data_complex_){
               CHECK_CL( clReleaseMemObject( data_complex_ ) );
-              data_complex_ = 0;
+              data_complex_ = nullptr;
             }
           }
           if(plan_) {
@@ -520,7 +520,7 @@ namespace gearshifft
             plan_ = 0;
           }
           CHECK_CL( clReleaseCommandQueue( queue_ ) );
-          queue_ = 0;
+          queue_ = nullptr;
         }
       }
     };
