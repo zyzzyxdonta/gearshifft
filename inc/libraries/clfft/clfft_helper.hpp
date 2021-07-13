@@ -194,7 +194,7 @@ namespace gearshifft {
         throw std::runtime_error("Unable to get platform_id");
       }
 
-      cl_platform_id *platform_ids = new cl_platform_id[num_of_platforms];
+      auto *platform_ids = new cl_platform_id[num_of_platforms];
       if (clGetPlatformIDs(num_of_platforms, platform_ids, NULL) != CL_SUCCESS) {
         delete[] platform_ids;
         throw std::runtime_error("Unable to get platform id array");
@@ -225,7 +225,7 @@ namespace gearshifft {
         throw std::runtime_error("Unable to get platform_id");
       }
 
-      cl_platform_id *platform_ids = new cl_platform_id[num_of_platforms];
+      auto *platform_ids = new cl_platform_id[num_of_platforms];
       if (clGetPlatformIDs(num_of_platforms, platform_ids, NULL) != CL_SUCCESS) {
         delete[] platform_ids;
         throw std::runtime_error("Unable to get platform id array");
@@ -235,7 +235,7 @@ namespace gearshifft {
       cl_uint num_of_devices = 0;
       for(cl_uint i=0; i<num_of_platforms; i++) {
         CHECK_CL( clGetDeviceIDs(platform_ids[i], CL_DEVICE_TYPE_ALL, 0, NULL, &num_of_devices) );
-        cl_device_id* devices = new cl_device_id[num_of_devices];
+        auto* devices = new cl_device_id[num_of_devices];
         if(clGetDeviceIDs(platform_ids[i],
                           CL_DEVICE_TYPE_ALL,
                           num_of_devices,
@@ -267,7 +267,7 @@ namespace gearshifft {
         throw std::runtime_error("Unable to get platform_id");
       }
 
-      cl_platform_id *platform_ids = new cl_platform_id[id_platform+1];
+      auto *platform_ids = new cl_platform_id[id_platform+1];
       CHECK_CL( clGetPlatformIDs(id_platform+1, platform_ids, NULL) );
 
       cl_uint num_of_devices = 0;
@@ -276,7 +276,7 @@ namespace gearshifft {
         throw std::runtime_error("Unable to get device_id");
       }
 
-      cl_device_id* devices = new cl_device_id[id_device+1];
+      auto* devices = new cl_device_id[id_device+1];
       CHECK_CL( clGetDeviceIDs(platform_ids[id_platform], CL_DEVICE_TYPE_ALL, id_device+1, devices, NULL) );
       *platform_id = platform_ids[id_platform];
       *device_id   = devices[id_device];

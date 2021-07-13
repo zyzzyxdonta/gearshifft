@@ -148,7 +148,7 @@ namespace gearshifft
       if(e==0) {
         return false;
       }
-      double a = static_cast<double>(e);
+      auto a = static_cast<double>(e);
       double p = floor(log(a)/log(b)+0.5);
       return fabs(pow(b,p)-a)<0.0001;
     }
@@ -158,7 +158,7 @@ namespace gearshifft
         return false;
       }
       size_t t = e;
-      size_t sqr = static_cast<size_t>(sqrt(e));
+      auto sqr = static_cast<size_t>(sqrt(e));
       for( size_t d=2; d<=sqr; ++d ) {
         // if e contains divisors > 7
         if( e%d == 0 && d>7 ) {

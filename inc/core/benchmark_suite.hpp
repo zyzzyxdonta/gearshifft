@@ -82,7 +82,7 @@ namespace gearshifft {
                                          T_FFTs,
                                          T_Precision>;
         Factory factory;
-        test_suite* sub_suite = BOOST_TEST_SUITE( ToString<T_Precision>::value() );
+        auto* sub_suite = BOOST_TEST_SUITE( ToString<T_Precision>::value() );
 
         auto extents1D = T_Context::options().getExtents1D();
         for(auto e : extents1D) {
