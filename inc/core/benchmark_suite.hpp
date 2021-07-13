@@ -34,7 +34,7 @@ namespace gearshifft {
         ts_ = BOOST_TEST_SUITE( ss.str() );
       }
       template<typename FFT>
-      void operator()(FFT) {
+      void operator()(FFT /*unused*/) {
         static_assert( has_title<FFT>::value, "FFT Implementation has no static title method.");
         using BenchmarkExecutorT = BenchmarkExecutor<T_Context,
                                                      FFT,
@@ -76,7 +76,7 @@ namespace gearshifft {
         suite_ = BOOST_TEST_SUITE( title );
       }
       template<typename T_Precision>
-      void operator() (T_Precision) {
+      void operator() (T_Precision /*unused*/) {
         using Factory = BenchmarkFactory<T_Context,
                                          T_FFT_Normalized,
                                          T_FFTs,

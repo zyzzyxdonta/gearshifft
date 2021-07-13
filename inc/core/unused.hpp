@@ -9,7 +9,7 @@ namespace gearshifft
   BOOST_FORCEINLINE
   BOOST_CXX14_CONSTEXPR
   void
-  ignore_unused( Ts const& ... )
+  ignore_unused( Ts const& ...  /*unused*/)
   {}
 
   template< typename... Ts >
