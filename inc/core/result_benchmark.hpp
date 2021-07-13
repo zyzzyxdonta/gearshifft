@@ -137,11 +137,11 @@ namespace gearshifft
     /// FFT Kind Complex
     bool isComplex_ = false;
     /// Precision as string
-    const char* precision_;
+    const char* precision_{};
     /// Error message
     std::string error_;
     /// Run where error occurred
-    int errorRun_;
+    int errorRun_{};
 
   private:
     bool powerOf(size_t e, double b) {

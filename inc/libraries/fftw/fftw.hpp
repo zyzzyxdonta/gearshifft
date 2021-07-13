@@ -281,7 +281,7 @@ namespace fftw {
                              unsigned plan_flags = FFTW_MEASURE){
 
         gearshifft::ignore_unused(_dir);
-        std::array<int,NDims> converted;
+        std::array<int,NDims> converted{};
         for(size_t i = 0;i < NDims;++i) {
           converted[i] = _shape[i];
         }
@@ -302,7 +302,7 @@ namespace fftw {
                              unsigned plan_flags = FFTW_MEASURE){
 
         gearshifft::ignore_unused(_dir);
-        std::array<int,NDims> converted;
+        std::array<int,NDims> converted{};
         for(size_t i = 0;i < NDims;++i) {
           converted[i] = _shape[i];
         }
@@ -322,7 +322,7 @@ namespace fftw {
                              fftw_direction _dir = fftw_direction::forward,
                              unsigned plan_flags = FFTW_MEASURE){
 
-        std::array<int,NDims> converted;
+        std::array<int,NDims> converted{};
         for(size_t i = 0;i < NDims;++i) {
           converted[i] = _shape[i];
         }
@@ -368,7 +368,7 @@ namespace fftw {
                              unsigned plan_flags = FFTW_MEASURE){
 
         gearshifft::ignore_unused(_dir);
-        std::array<int,NDims> converted;
+        std::array<int,NDims> converted{};
         for(size_t i = 0;i < NDims;++i) {
           converted[i] = _shape[i];
         }
@@ -390,7 +390,7 @@ namespace fftw {
                              unsigned plan_flags = FFTW_MEASURE){
 
         gearshifft::ignore_unused(_dir);
-        std::array<int,NDims> converted;
+        std::array<int,NDims> converted{};
         for(size_t i = 0;i < NDims;++i) {
           converted[i] = _shape[i];
         }
@@ -411,7 +411,7 @@ namespace fftw {
                              fftw_direction _dir = fftw_direction::forward,
                              unsigned plan_flags = FFTW_MEASURE){
 
-        std::array<int,NDims> converted;
+        std::array<int,NDims> converted{};
         for(size_t i = 0;i < NDims;++i) {
           converted[i] = _shape[i];
         }
