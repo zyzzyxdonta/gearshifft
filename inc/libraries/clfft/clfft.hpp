@@ -224,7 +224,7 @@ namespace gearshifft
       size_t offset_[3] = {0};
 
 
-      ClFFTImpl(const Extent& cextents) {
+      explicit ClFFTImpl(const Extent& cextents) {
         cl_int err{};
         context_ = ClFFTContext::context();
         if(context_.ctx==0) {

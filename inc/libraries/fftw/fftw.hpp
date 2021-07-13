@@ -596,7 +596,7 @@ namespace fftw {
 
     unsigned plan_rigor_ = FftwContext::options().plan_rigor();
 
-    FftwImpl(const Extent& cextents) {
+    explicit FftwImpl(const Extent& cextents) {
         extents_ = interpret_as::column_major(cextents);
         extents_complex_ = extents_;
 

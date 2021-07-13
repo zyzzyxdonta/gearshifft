@@ -67,12 +67,12 @@ namespace gearshifft {
   struct BenchmarkSuite {
     const std::string title_;
     BenchmarkSuite( ) : title_(T_Context::title()) { }
-    BenchmarkSuite( const char* title ) : title_(title) { }
+    explicit BenchmarkSuite( const char* title ) : title_(title) { }
 
     /// Functor for mpl::for_each<T_Precisions>
     struct Apply {
       test_suite* suite_;
-      Apply(const std::string title) {
+      explicit Apply(const std::string title) {
         suite_ = BOOST_TEST_SUITE( title );
       }
       template<typename T_Precision>
